@@ -2,6 +2,8 @@
 
 Android application to control Raspberry Pi running Proxmox hypervisor and various services.
 
+> ⚠️ **Work in Progress**: This is a template application that cannot be fully built or used until the Raspberry Pi 5 server is installed and configured (planned by end of 2025). The UI is complete, but backend API integration is pending server deployment.
+
 ## Features
 
 ### 🖥️ Hypervisor Control
