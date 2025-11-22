@@ -113,11 +113,20 @@
                     android:text="Upload Selected Photos"
                     android:enabled="false" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Note: Auto backup feature is not yet implemented"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    android:textColor="?attr/colorError"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                    android:orientation="horizontal">
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/switch_auto_backup"
@@ -125,7 +134,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Auto Backup (WiFi only)"
-                        android:checked="false" />
+                        android:checked="false"
+                        android:enabled="false" />
                 </LinearLayout>
 
             </LinearLayout>
