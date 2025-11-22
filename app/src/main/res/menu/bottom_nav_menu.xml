@@ -17,6 +17,11 @@
         android:title="@string/title_minecraft" />
 
     <item
+        android:id="@+id/navigation_mikrotik"
+        android:icon="@drawable/ic_router"
+        android:title="@string/title_mikrotik" />
+
+    <item
         android:id="@+id/navigation_home_automation"
         android:icon="@drawable/ic_home"
         android:title="@string/title_home_automation" />

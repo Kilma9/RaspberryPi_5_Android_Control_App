@@ -24,6 +24,12 @@
         tools:layout="@layout/fragment_minecraft" />
 
     <fragment
+        android:id="@+id/navigation_mikrotik"
+        android:name="com.kilma.raspberrypi.ui.mikrotik.MikrotikFragment"
+        android:label="@string/title_mikrotik"
+        tools:layout="@layout/fragment_mikrotik" />
+
+    <fragment
         android:id="@+id/navigation_home_automation"
         android:name="com.kilma.raspberrypi.ui.homeautomation.HomeAutomationFragment"
         android:label="@string/title_home_automation"
