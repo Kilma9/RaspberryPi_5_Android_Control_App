@@ -30,6 +30,47 @@ class MikrotikFragment : Fragment() {
             binding.tvTerminalOutput.text = output
         }
 
+        // Quick command buttons
+        binding.btnSystemResource.setOnClickListener {
+            viewModel.getSystemResource()
+        }
+
+        binding.btnSystemIdentity.setOnClickListener {
+            viewModel.getSystemIdentity()
+        }
+
+        binding.btnInterfaces.setOnClickListener {
+            viewModel.getInterfaces()
+        }
+
+        binding.btnIpAddress.setOnClickListener {
+            viewModel.getIpAddresses()
+        }
+
+        binding.btnRoutes.setOnClickListener {
+            viewModel.getRoutes()
+        }
+
+        binding.btnFirewall.setOnClickListener {
+            viewModel.getFirewallRules()
+        }
+
+        binding.btnDhcpLeases.setOnClickListener {
+            viewModel.getDhcpLeases()
+        }
+
+        binding.btnWireless.setOnClickListener {
+            viewModel.getWireless()
+        }
+
+        binding.btnWirelessClients.setOnClickListener {
+            viewModel.getWirelessClients()
+        }
+
+        binding.btnLogs.setOnClickListener {
+            viewModel.getSystemLogs()
+        }
+
         // Connect button
         binding.btnConnect.setOnClickListener {
             val ip = binding.etIpAddress.text.toString()

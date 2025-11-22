@@ -61,28 +61,103 @@ class MikrotikViewModel : ViewModel() {
             if (result.isSuccess) {
                 val response = result.getOrNull() ?: ""
                 appendToTerminal("> Response:")
-                appendToTerminal(response)
+                val formatted = formatJsonResponse(response)
+                appendToTerminal(formatted)
             } else {
                 appendToTerminal("> ERROR: ${result.exceptionOrNull()?.message}")
             }
         }
     }
 
+    // Format JSON response for better readability
+    private fun formatJsonResponse(json: String): String {
+        if (json.isBlank()) return "(empty response)"
+        
+        return try {
+            val jsonArray = org.json.JSONArray(json)
+            val formatted = StringBuilder()
+            
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                formatted.append("\n--- Item ${i + 1} ---")
+                
+                val keys = obj.keys()
+                while (keys.hasNext()) {
+                    val key = keys.next()
+                    val value = obj.getString(key)
+                    // Skip internal fields starting with dot
+                    if (!key.startsWith(".")) {
+                        formatted.append("\n  $key: $value")
+                    } else if (key == ".id") {
+                        formatted.append("\n  ID: $value")
+                    }
+                }
+                formatted.append("\n")
+            }
+            
+            formatted.toString()
+        } catch (e: Exception) {
+            // Try as single object
+            try {
+                val obj = org.json.JSONObject(json)
+                val formatted = StringBuilder("\n")
+                val keys = obj.keys()
+                while (keys.hasNext()) {
+                    val key = keys.next()
+                    val value = obj.getString(key)
+                    if (!key.startsWith(".")) {
+                        formatted.append("\n  $key: $value")
+                    } else if (key == ".id") {
+                        formatted.append("\n  ID: $value")
+                    }
+                }
+                formatted.toString()
+            } catch (e2: Exception) {
+                // Return as-is if not JSON
+                json
+            }
+        }
+    }
+
     // Quick actions
+    fun getSystemResource() {
+        sendApiRequest("/system/resource", "GET")
+    }
+
+    fun getSystemIdentity() {
+        sendApiRequest("/system/identity", "GET")
+    }
+
     fun getInterfaces() {
         sendApiRequest("/interface", "GET")
     }
 
-    fun enableInterface(interfaceId: String) {
-        sendApiRequest("/interface/$interfaceId", "PATCH", mapOf("disabled" to "false"))
+    fun getIpAddresses() {
+        sendApiRequest("/ip/address", "GET")
     }
 
-    fun disableInterface(interfaceId: String) {
-        sendApiRequest("/interface/$interfaceId", "PATCH", mapOf("disabled" to "true"))
+    fun getRoutes() {
+        sendApiRequest("/ip/route", "GET")
     }
 
-    fun getSystemResource() {
-        sendApiRequest("/system/resource", "GET")
+    fun getFirewallRules() {
+        sendApiRequest("/ip/firewall/filter", "GET")
+    }
+
+    fun getDhcpLeases() {
+        sendApiRequest("/ip/dhcp-server/lease", "GET")
+    }
+
+    fun getWireless() {
+        sendApiRequest("/interface/wireless", "GET")
+    }
+
+    fun getWirelessClients() {
+        sendApiRequest("/interface/wireless/registration-table", "GET")
+    }
+
+    fun getSystemLogs() {
+        sendApiRequest("/log", "GET")
     }
 
     fun disconnect() {

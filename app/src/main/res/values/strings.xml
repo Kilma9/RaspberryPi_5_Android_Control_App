@@ -4,5 +4,6 @@
     <string name="title_docker">Docker</string>
     <string name="title_minecraft">Minecraft</string>
     <string name="title_mikrotik">MikroTik</string>
+    <string name="title_photos">Photos</string>
     <string name="title_home_automation">Home</string>
 </resources>

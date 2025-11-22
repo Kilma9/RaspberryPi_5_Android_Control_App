@@ -30,6 +30,12 @@
         tools:layout="@layout/fragment_mikrotik" />
 
     <fragment
+        android:id="@+id/navigation_photos"
+        android:name="com.kilma.raspberrypi.ui.photos.PhotosFragment"
+        android:label="@string/title_photos"
+        tools:layout="@layout/fragment_photos" />
+
+    <fragment
         android:id="@+id/navigation_home_automation"
         android:name="com.kilma.raspberrypi.ui.homeautomation.HomeAutomationFragment"
         android:label="@string/title_home_automation"

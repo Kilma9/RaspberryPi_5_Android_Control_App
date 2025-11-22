@@ -22,6 +22,11 @@
         android:title="@string/title_mikrotik" />
 
     <item
+        android:id="@+id/navigation_photos"
+        android:icon="@drawable/ic_photo"
+        android:title="@string/title_photos" />
+
+    <item
         android:id="@+id/navigation_home_automation"
         android:icon="@drawable/ic_home"
         android:title="@string/title_home_automation" />
