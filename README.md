@@ -19,11 +19,35 @@ Android application to control Raspberry Pi 5 running Proxmox hypervisor, MikroT
 - Quick container actions
 
 ### ⛏️ Minecraft Server Control
-> ⚠️ **Not yet implemented** - UI template ready
+> ✅ **Fully functional** - RCON protocol integration
 
-- Pre-programmed server commands
-- Server restart functionality
-- Game mode switching (Creative/Survival)
+**Features:**
+- Remote server control via RCON protocol (port 25575)
+- Player gamemode management (Creative/Survival)
+- Item giving system with quantity control
+- 12 quick item buttons with authentic Minecraft textures:
+  - Tools: Diamond Sword, Iron Pickaxe, Elytra, Enchanted Book, Totem of Undying
+  - Consumables: Golden Apple (16x), Ender Pearl (16x)
+  - Resources: Diamond (64x), Emerald (64x), TNT (64x), Iron Ingot (64x), Obsidian (64x)
+- Custom item command with any Minecraft item ID
+- Real-time command output display
+
+**Setup:**
+1. Enable RCON in server.properties:
+   ```properties
+   enable-rcon=true
+   rcon.port=25575
+   rcon.password=your_password
+   ```
+2. In app: Enter server IP (e.g., 10.0.0.122), port (25575), password
+3. Click Connect
+4. Enter player name and use gamemode or item buttons
+
+**Technical Implementation:**
+- Binary RCON protocol with authentication
+- Little-endian packet construction using ByteBuffer
+- Socket-based TCP communication
+- Packet types: SERVERDATA_AUTH (3), SERVERDATA_EXECCOMMAND (2)
 
 ### 🌐 MikroTik Router Control
 > ✅ **Fully functional** - HTTP REST API
@@ -79,8 +103,8 @@ Android application to control Raspberry Pi 5 running Proxmox hypervisor, MikroT
 - **Target SDK**: 34 (Android 14)
 - **Build System**: Gradle 8.9 + AGP 8.1.0
 - **Architecture**: MVVM with LiveData
-- **UI**: Material Design 3 with Bottom Navigation (5 tabs max)
-- **Networking**: OkHttp 4.11.0
+- **UI**: Material Design 3 with Bottom Navigation (5 tabs with colored icons)
+- **Networking**: OkHttp 4.11.0 + Socket I/O for RCON
 - **Async**: Kotlin Coroutines 1.7.3
 - **View Binding**: Enabled
 
@@ -93,7 +117,8 @@ app/
 │   │   ├── MainActivity.kt
 │   │   ├── api/
 │   │   │   ├── MikrotikApiClient.kt
-│   │   │   └── ImmichApiClient.kt
+│   │   │   ├── ImmichApiClient.kt
+│   │   │   └── MinecraftRconClient.kt
 │   │   └── ui/
 │   │       ├── hypervisor/
 │   │       ├── docker/
@@ -151,6 +176,48 @@ The script:
 
 ## Changelog
 
+### November 26, 2025
+**Minecraft Server Control & Colored Navigation Icons:**
+
+**⛏️ Minecraft RCON Integration (Fully Functional):**
+- Complete binary RCON protocol implementation with authentication
+- Server connection UI with IP (10.0.0.122), port (25575), and password fields
+- Player gamemode management (Creative/Survival mode switching)
+- Item giving system with custom item name and quantity inputs
+- **12 Quick Item Buttons** with authentic Minecraft texture icons:
+  - **Tools (1x):** Diamond Sword, Iron Pickaxe, Elytra, Enchanted Book, Totem of Undying
+  - **Consumables (16x):** Golden Apple, Ender Pearl
+  - **Resources (64x):** Diamond, Emerald, TNT, Iron Ingot, Obsidian
+- Custom item command field for any Minecraft item ID
+- Real-time command output display with monospace font
+- Full socket-based TCP communication with Minecraft servers
+
+**🎨 Colored Navigation Icons:**
+- Added branded PNG icons for all 5 navigation tabs
+- Disabled Material Design icon tinting (programmatically via `itemIconTintList = null`)
+- Icons show original colors: Proxmox orange, Docker blue, Minecraft green, MikroTik blue, Immich purple
+- Fixed Android resource naming violations (removed numbered PNG files)
+
+**🔧 Technical Implementation:**
+- **MinecraftRconClient.kt**: Socket-based binary RCON protocol client
+  - `sendPacket()`: Little-endian ByteBuffer packet construction
+  - `receivePacket()`: Binary packet parsing with size headers
+  - Authentication: SERVERDATA_AUTH (type 3)
+  - Command execution: SERVERDATA_EXECCOMMAND (type 2)
+- **MinecraftViewModel.kt**: Business logic for player and item management
+- **MinecraftFragment.kt**: UI with connection handling and 12 quick item buttons
+- **MainActivity.kt**: Programmatic icon tint disabling for BottomNavigationView
+- **fragment_minecraft.xml**: Complete Minecraft control UI layout
+
+**Icon Assets Added:**
+- 12 Minecraft item textures: `mc_diamond_sword.png`, `mc_iron_pickaxe.png`, `mc_golden_apple.png`, `mc_ender_pearl.png`, `mc_diamond.png`, `mc_emerald.png`, `mc_tnt.png`, `mc_elytra.png`, `mc_enchanted_book.png`, `mc_totem_of_undying.png`, `mc_iron_ingot.png`, `mc_obsidian.png`
+- Navigation logos: `proxmox.png`, `docker.png`, `minecraft_logo.png`, `mikrotik.png`, `immich.png`
+
+**Bug Fixes:**
+- Fixed XML syntax errors from malformed PowerShell regex replacement
+- Cleaned up 200+ invalid Android resource files (PNG files starting with numbers)
+- Fixed build failures from resource naming violations
+
 ### November 22, 2025
 **Major Updates:**
 - 🐛 **Fixed app crash**: Reduced navigation tabs from 6 to 5 (BottomNavigationView limit)
@@ -202,7 +269,7 @@ The script:
    - No background sync
 3. **MikroTik HTTPS**: Self-signed certificate errors
    - HTTP works fine on trusted networks
-4. **Hypervisor/Docker/Minecraft**: UI templates only
+4. **Hypervisor/Docker**: UI templates only
    - Backend integration pending Raspberry Pi deployment
 
 ## Future Enhancements
@@ -216,7 +283,6 @@ The script:
 **Medium Priority:**
 - [ ] Proxmox API integration for hypervisor control
 - [ ] Docker API integration
-- [ ] Minecraft RCON integration
 - [ ] Real-time performance graphs
 - [ ] Push notifications for system alerts
 
@@ -237,5 +303,5 @@ Private project - All rights reserved
 ---
 
 **Project Status**: Active Development  
-**Last Updated**: November 22, 2025  
+**Last Updated**: November 26, 2025  
 **Platform**: Android 7.0+ (API 24+)

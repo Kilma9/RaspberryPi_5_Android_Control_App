@@ -20,6 +20,9 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         
+        // Disable icon tinting to show colored icons
+        navView.itemIconTintList = null
+        
         navView.setupWithNavController(navController)
     }
 }

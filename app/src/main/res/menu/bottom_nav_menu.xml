@@ -3,27 +3,27 @@
 
     <item
         android:id="@+id/navigation_hypervisor"
-        android:icon="@drawable/ic_server"
+        android:icon="@drawable/proxmox"
         android:title="@string/title_hypervisor" />
 
     <item
         android:id="@+id/navigation_docker"
-        android:icon="@drawable/ic_docker"
+        android:icon="@drawable/docker"
         android:title="@string/title_docker" />
 
     <item
         android:id="@+id/navigation_minecraft"
-        android:icon="@drawable/ic_minecraft"
+        android:icon="@drawable/minecraft_logo"
         android:title="@string/title_minecraft" />
 
     <item
         android:id="@+id/navigation_mikrotik"
-        android:icon="@drawable/ic_router"
+        android:icon="@drawable/mikrotik"
         android:title="@string/title_mikrotik" />
 
     <item
         android:id="@+id/navigation_photos"
-        android:icon="@drawable/ic_photo"
+        android:icon="@drawable/immich"
         android:title="@string/title_photos" />
 
 </menu>
